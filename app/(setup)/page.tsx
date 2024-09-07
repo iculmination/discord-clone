@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { redirectToSignIn } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
 import InitialModal from "@/components/modals/initial-modal";
@@ -8,7 +7,7 @@ const SetupPage = async () => {
   const profile = await initialProfile();
 
   if (!("id" in profile)) {
-    return redirectToSignIn();
+    return redirect("sign-in");
   }
 
   const server = await db.server.findFirst({
