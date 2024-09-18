@@ -63,10 +63,11 @@ const CreateChannelModal = () => {
   const isLoading = form.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const url = qs.stringify({
+      const url = qs.stringifyUrl({
         url: "/api/channels",
         query: { serverId: params?.serverId },
       });
+      console.log(url);
       await axios.post(url, values);
       form.reset();
       router.refresh();
@@ -122,6 +123,7 @@ const CreateChannelModal = () => {
                       disabled={isLoading}
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
@@ -132,7 +134,7 @@ const CreateChannelModal = () => {
                         {Object.values(ChannelType).map((type) => (
                           <SelectItem
                             key={type}
-                            value="type"
+                            value={type}
                             className="capitalize"
                           >
                             {type.toLowerCase()}
